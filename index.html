@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Example Cinematic</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.js" integrity="sha512-H05oT7BAjM9Ai1IaFX9zr61NtE2e1P0MkTz3AZXBnseaJSAOt2FGMFJ+vVGutaJxEGA1jxUiYsTBYQNE08/Erw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        class Logo extends Phaser.Scene {
+            constructor() {
+                super('Logo');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('logo', 'logo.png');
+            }
+            create() {
+                this.add.text(240,220,"Click to begin.");
+                this.input.on('pointerdown', () => this.scene.start('Intro'));
+            }
+        }
+        class Intro extends Phaser.Scene {
+            constructor() {
+                super('Intro');
+            }
+            
+            create() {
+                var logo = this.add.sprite(110,220,'logo');
+                logo.setScale(0.4);
+                
+                this.tweens.add({
+                targets: logo,
+                x: 300,
+                duration: 2000,
+                hold: 200,
+                ease: 'bounce'
+                });
+
+                this.textObject = this.add.text(580,440,"tap");
+                this.input.on('pointerdown', () => this.scene.start('Body1'));
+            
+            }
+        }
+        class Body1 extends Phaser.Scene {
+            constructor() {
+                super('Body1');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('scenery', 'scenery.png');
+            }
+            create() {
+                this.imageObject = this.add.image(
+                320,//x
+                240,//y
+                'scenery',//imagename
+                )
+                this.imageObject.setScale(1) //resize
+
+                this.textObject = this.add.text(
+                    90,
+                    100,
+                    "Deep down under lies a treasure chest...",
+                    {
+                        font: "30px Times New Roman",
+                        color: "black",
+                    }
+
+                );
+                this.tweens.add({
+                    targets: this.textObject,
+                    alpha: 0,
+                    duration: 6000,
+                    ease: 'Power2'
+                })
+                
+                this.textObject = this.add.text(580,440,"tap");
+                this.input.on('pointerdown', () => this.scene.start('Body2'));
+                
+            }
+        }
+        class Body2 extends Phaser.Scene {
+            constructor() {
+                super('Body2');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('scenery', 'scenery.png');
+            }
+            create() {
+                this.imageObject = this.add.image(
+                320,//x
+                240,//y
+                'scenery',//imagename
+                )
+                this.imageObject.setScale(1) //resize
+
+                this.textObject2 = this.add.text(
+                    90,
+                    100,
+                    "...filled with the most shimmery treasure",
+                    {
+                        font: "30px Times New Roman",
+                        color: "black",
+                    }
+
+                );
+                
+                this.tweens.add({
+                    targets: this.textObject2,
+                    alpha: 0,
+                    duration: 6000,
+                    ease: 'Power2.easeIn'
+                })
+
+                this.textObject = this.add.text(580,440,"tap");
+                this.input.on('pointerdown', () => this.scene.start('Body3'));
+                
+            }
+        }
+        class Body3 extends Phaser.Scene {
+            constructor() {
+                super('Body3');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('scenery', 'scenery.png');
+            this.load.image('monster', 'seaMonster.png');
+            this.load.audio('mSound', 'monsterSound.mp3');
+            }
+            create() {
+                let audio1 = this.sound.add('mSound');
+                audio1.play();
+            
+                this.imageObject = this.add.image(
+                320,//x
+                240,//y
+                'scenery',//imagename
+                )
+                this.imageObject.setScale(1) //resize
+
+                this.textObject3 = this.add.text(
+                    45,
+                    100,
+                    "However, a deadly monster protects the chest",
+                    {
+                        font: "30px Times New Roman",
+                        color: "black",
+                    }
+
+                );
+
+                let monster1 = this.add.image(
+                    100,
+                    280,
+                    'monster',
+                )
+                let monster2 = this.add.image(
+                    800,
+                    280,
+                    'monster',
+                )
+                monster2.flipX = true;
+                this.tweens.add({
+                    targets: monster1,
+                    x: 850,
+                    duration: 11000,
+                    hold: 200,
+                    ease: 'linear'
+                })
+                this.tweens.add({
+                    targets: monster2,
+                    x: -180,
+                    delay: 11000,
+                    duration: 10000,
+                    hold: 200,
+                    ease: 'linear'
+                })
+                this.textObject = this.add.text(580,440,"tap");
+                this.input.on('pointerdown', () => this.scene.start('SeaMonster'));
+            }
+        }
+        class SeaMonster extends Phaser.Scene {
+            constructor() {
+                super('SeaMonster');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('scenery', 'scenery.png');
+            this.load.image('monster', 'seaMonster.png');
+            }
+            create(){
+                this.imageObject = this.add.image(
+                320,//x
+                240,//y
+                'scenery',//imagename
+                )
+                this.imageObject.setScale(1) //resize
+
+                this.imageObject2 = this.add.image(
+                    250,
+                    300,
+                    'monster'
+                )
+                this.graphics = this.add.graphics();
+                this.graphics.fillStyle('0xffffff', 1);
+                this.graphics.fillEllipse(450, 150, 200, 100);
+
+                this.textObject = this.add.text(
+                    395,
+                    140,
+                    "MY treasure!",
+                    {
+                        font: "20px Times New Roman",
+                        color: "black",
+                    }
+                )
+                this.textObject = this.add.text(580,440,"tap");
+                this.input.on('pointerdown', () => this.scene.start('Chest'));
+            }
+        }
+        class Chest extends Phaser.Scene {
+            constructor() {
+                super('Chest');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('chest', 'chest.png');
+            this.load.audio('tSound', 'treasureSound.mp3');
+            }
+            create(){
+                let audio1 = this.sound.add('tSound');
+                audio1.play();
+
+                this.imageObject = this.add.image(
+                320,//x
+                240,//y
+                'chest',//imagename
+                )
+                this.imageObject.setScale(1) //resize
+
+                this.graphics = this.add.graphics();
+                this.graphics.fillStyle('0xffffff', 1);
+                let star1 = this.add.star(200, 150, 4, 10, 38, 0xffff00);
+                let star2 = this.add.star(250, 100, 4, 5, 19, 0xffff00);
+              
+                this.tweens.add({
+                targets: star1,
+                angle: 90,
+                yoyo: true,
+                ease: 'Sine.easeInOut'
+                });
+                
+                this.tweens.add({
+                targets: star2,
+                angle: 180,
+                yoyo: true,
+                ease: 'Sine.easeInOut'
+                });
+
+                this.cameras.main.fadeOut(10000);
+                
+                setTimeout(() => {
+                this.scene.start('End'); 
+                }, 3500);
+
+
+            }
+        }
+        class End extends Phaser.Scene {
+            constructor() {
+                super('End');
+            }
+            preload(){
+            this.load.path = './assets/';
+            this.load.image('scenery', 'scenery.png');
+            }
+            create() {
+                this.imageObject = this.add.image(
+                320,//x
+                240,//y
+                'scenery',//imagename
+                )
+                this.imageObject.setScale(1) //resize
+
+                this.cameras.main.fadeIn(4000);
+
+                this.textObject = this.add.text(
+                    140,
+                    50,
+                    "Treasure (&) Hunt(er)",
+                    {
+                        font: "40px Times New Roman",
+                        color: "green",
+                    }
+
+                );
+                let box = this.add.text(200, 130,
+`Play
+
+Options
+
+Quit`,
+                    {
+                        font: "30px Times New Roman",
+                        color: "black",
+                    }
+                );
+                box.setWordWrapWidth(250);
+            }
+        }
+        new Phaser.Game({
+            width: 640,
+            height: 480,
+            backgroundColor: 0x90ee90,
+            scene: [Logo, Intro, Body1, Body2, Body3, SeaMonster, Chest, End],
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
