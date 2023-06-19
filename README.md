@@ -13,3 +13,6 @@ Key requirements for this assignment:
 - Audio recorded on Voice Memos.
     - Sea monster sound was spoken and recorded.
     - Trasure sound was played on piano and recorded. 
+
+- Link to game:
+    - https://pallavirajeev.github.io/D1Cinematic/
